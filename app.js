@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 const Database = require('./db');
 
-
+// database connection info
 const dbConfig = {
     host: 'localhost',
     user: 'root', 
@@ -12,18 +12,50 @@ const dbConfig = {
 // instantiate new database connection
 const db = new Database(dbConfig);
 
-//testing adding and removing departments
+// entry point
 async function init () {
 
-    await db.viewDepartments();
-    await db.viewEmployees();
-    await db.viewRoles();
-
-    // testing get queries and returned data
-    console.log(await db.getDepartments());
-    console.log(await db.getEmployees());
-    console.log(await db.getRoles());
-    
+    await promptMainMenu();    
 }
 
+// main menu of employee tracker
+async function promptMainMenu() {
+    try {
+        const { action } = await inquirer.prompt([
+            {
+                type: 'list',
+                name: 'action',
+                message: 'What would you like to do?',
+                choices: [
+                    'View all departments',
+                    'View all roles',
+                    'View all employees',
+                    'Add a department',
+                    'Add a role',
+                    'Add an employee',
+                    'Update an employee role',
+                    'Exit'
+                ],
+            },
+        ]);
+
+        // switch case to handle user selection
+        switch (action) {
+            case 'View all departments':
+                await db.viewDepartments();
+                break;
+            case 'Exit':
+            console.log('Closing Application...');
+            return;
+        }
+        
+        // run the main menu again until exit
+        promptMainMenu();
+    }
+    catch(err) {
+        console.error('Error during main menu prompt:', err);
+    }
+}
+
+// intitialize the app
 init();
