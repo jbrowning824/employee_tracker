@@ -51,6 +51,7 @@ async function promptMainMenu() {
                 await db.viewEmployees();
                 break;
             case 'Add a department':
+                await promptAddDepartment();
                 break;
             case 'Add a role':
                 break;
@@ -69,6 +70,31 @@ async function promptMainMenu() {
     catch(err) {
         console.error('Error during main menu prompt:', err);
     }
+}
+
+// prompt for adding new departments
+async function promptAddDepartment() {
+    const { departmentName } = await inquirer.prompt([
+        {
+            type: 'input',
+            name: 'departmentName',
+            message: 'Enter the name of the new department:',
+        },
+    ]);
+
+    await db.addDepartment(departmentName);
+}
+
+async function promptAddRole() {
+
+}
+
+async function promptAddEmployee() {
+
+}
+
+async function promptUpdateEmployee() {
+
 }
 
 // intitialize the app
