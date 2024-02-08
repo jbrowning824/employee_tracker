@@ -1,6 +1,7 @@
 const inquirer = require('inquirer');
 const Database = require('./db');
 
+
 const dbConfig = {
     host: 'localhost',
     user: 'root', 
@@ -8,12 +9,14 @@ const dbConfig = {
     database: 'employee_tracker'
 };
 
+// instantiate new database connection
 const db = new Database(dbConfig);
 
-//testing to make sure view departments works
+//testing to make sure views work
 async function init () {
-await db.viewDepartments();
-
+    await db.viewDepartments();
+    await db.viewEmployees();
+    await db.viewRoles();
 }
 
 init();
