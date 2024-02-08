@@ -35,19 +35,53 @@ class Database {
         console.table(rows);
     }
 
+    // add new department to the database
     async addDepartment(name) {
         const query = `INSERT INTO department (name) VALUES (?)`;
         await this.connection.query(query, name);
         console.log(`Added ${name} to the database`);
     }
 
-    async deleteDepartment(name) {
+    async addRole(title, salary, departmentId) {
+        const query = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
+        await this.connection.query(query, [title, salary, departmentId]);
+        console.log(`Added role ${title} to the database`);
+    }
+
+    async addEmployee(firstName, lastName, roleId, managerId) {
+        const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
+        await this.connection.query(query, [firstName, lastName, roleId, managerId]);
+        console.log(`Added employee ${firstName} ${lastName} to the database`);
+    }
+
+
+    async deleteDepartment(departmentId) {
         try {
             const query = `DELETE FROM department WHERE name = ?`;
-            await this.connection.query(query, [name]);
-            console.log(`Deleted department with ID ${name}`);
+            await this.connection.query(query, [departmentId]);
+            console.log(`Deleted department with ID ${departmentId}`);
         } catch (err) {
             console.error(`Error deleting department: ${err.message}`);
+        }
+    }
+
+    async deleteRole(departmentId) {
+        try {
+            const query = `DELETE FROM role WHERE id = ?`;
+            await this.connection.query(query, [departmentId]);
+            console.log(`Deleted role with ID ${departmentId}`);
+        } catch (err) {
+            console.error(`Error deleting role: ${err.message}`);
+        }
+    }
+
+    async deleteEmployee(departmentId) {
+        try {
+            const query = `DELETE FROM employee WHERE id = ?`;
+            await this.connection.query(query, [departmentId]);
+            console.log(`Deleted employee with ID ${departmentId}`);
+        } catch (err) {
+            console.error(`Error deleting employee: ${err.message}`);
         }
     }
 
