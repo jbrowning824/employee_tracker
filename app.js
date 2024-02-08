@@ -44,6 +44,20 @@ async function promptMainMenu() {
             case 'View all departments':
                 await db.viewDepartments();
                 break;
+            case 'View all roles':
+                await db.viewRoles();
+                break;
+            case 'View all employees':
+                await db.viewEmployees();
+                break;
+            case 'Add a department':
+                break;
+            case 'Add a role':
+                break;
+            case 'Add an employee':
+                break;
+            case 'Update an employee role':
+                break;
             case 'Exit':
             console.log('Closing Application...');
             return;
