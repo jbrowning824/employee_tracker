@@ -14,12 +14,15 @@ const db = new Database(dbConfig);
 
 //testing adding and removing departments
 async function init () {
-    
+
     await db.viewDepartments();
     await db.viewEmployees();
     await db.viewRoles();
 
-    
+    // testing get queries and returned data
+    console.log(await db.getDepartments());
+    console.log(await db.getEmployees());
+    console.log(await db.getRoles());
     
 }
 

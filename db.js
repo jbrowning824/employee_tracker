@@ -42,19 +42,21 @@ class Database {
         console.log(`Added ${name} to the database`);
     }
 
+    // add new role to a deparment
     async addRole(title, salary, departmentId) {
         const query = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
         await this.connection.query(query, [title, salary, departmentId]);
         console.log(`Added role ${title} to the database`);
     }
 
+    // add new employee to role
     async addEmployee(firstName, lastName, roleId, managerId) {
         const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
         await this.connection.query(query, [firstName, lastName, roleId, managerId]);
         console.log(`Added employee ${firstName} ${lastName} to the database`);
     }
 
-
+    // remove department
     async deleteDepartment(departmentId) {
         try {
             const query = `DELETE FROM department WHERE name = ?`;
@@ -65,6 +67,7 @@ class Database {
         }
     }
 
+    // remove role
     async deleteRole(departmentId) {
         try {
             const query = `DELETE FROM role WHERE id = ?`;
@@ -75,6 +78,7 @@ class Database {
         }
     }
 
+    //remove employee
     async deleteEmployee(departmentId) {
         try {
             const query = `DELETE FROM employee WHERE id = ?`;
@@ -83,6 +87,27 @@ class Database {
         } catch (err) {
             console.error(`Error deleting employee: ${err.message}`);
         }
+    }
+
+    // get department data for add or deletes
+    async getDepartments() {
+        const query = `SELECT * FROM department`;
+        const [rows] = await this.connection.query(query);
+        return rows;
+    }
+
+    // get role data for add or deletes
+    async getRoles() {
+        const query = `SELECT * FROM role`;
+        const [rows] = await this.connection.query(query);
+        return rows;
+    }
+
+    // get employee data for add or deletes
+    async getEmployees() {
+        const query = `SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee`;
+        const [rows] = await this.connection.query(query);
+        return rows;
     }
 
 }

@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dbinit": "mysql -u root -p < ./db/schema.sql",
-    "seed": "mysql -u root -p employee_tracker < ./db/seeds.sql"
+    "seed": "mysql -u root -p employee_tracker < ./db/seeds.sql",
+    "start": "node app.js"
   },
   "dependencies": {
     "inquirer": "^8.2.4",
