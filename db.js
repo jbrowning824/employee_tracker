@@ -39,21 +39,18 @@ class Database {
     async addDepartment(name) {
         const query = `INSERT INTO department (name) VALUES (?)`;
         await this.connection.query(query, name);
-        console.log(`Added ${name} to the database`);
     }
 
     // add new role to a deparment
     async addRole(title, salary, departmentId) {
         const query = `INSERT INTO role (title, salary, department_id) VALUES (?, ?, ?)`;
         await this.connection.query(query, [title, salary, departmentId]);
-        console.log(`Added role ${title} to the database`);
     }
 
     // add new employee to role
     async addEmployee(firstName, lastName, roleId, managerId) {
         const query = `INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
         await this.connection.query(query, [firstName, lastName, roleId, managerId]);
-        console.log(`Added employee ${firstName} ${lastName} to the database`);
     }
 
     // remove department
@@ -61,7 +58,6 @@ class Database {
         try {
             const query = `DELETE FROM department WHERE name = ?`;
             await this.connection.query(query, [departmentId]);
-            console.log(`Deleted department with ID ${departmentId}`);
         } catch (err) {
             console.error(`Error deleting department: ${err.message}`);
         }
@@ -72,7 +68,6 @@ class Database {
         try {
             const query = `DELETE FROM role WHERE id = ?`;
             await this.connection.query(query, [departmentId]);
-            console.log(`Deleted role with ID ${departmentId}`);
         } catch (err) {
             console.error(`Error deleting role: ${err.message}`);
         }
@@ -83,7 +78,6 @@ class Database {
         try {
             const query = `DELETE FROM employee WHERE id = ?`;
             await this.connection.query(query, [departmentId]);
-            console.log(`Deleted employee with ID ${departmentId}`);
         } catch (err) {
             console.error(`Error deleting employee: ${err.message}`);
         }
@@ -108,6 +102,12 @@ class Database {
         const query = `SELECT id, CONCAT(first_name, ' ', last_name) AS name FROM employee`;
         const [rows] = await this.connection.query(query);
         return rows;
+    }
+
+    // update employee role
+    async updateEmployeeRole(employeeId, roleId) {
+        const query = `UPDATE employee SET role_id = ? WHERE id = ?`;
+        await this.connection.query(query, [roleId, employeeId]);
     }
 
 }
