@@ -35,6 +35,22 @@ class Database {
         console.table(rows);
     }
 
+    async addDepartment(name) {
+        const query = `INSERT INTO department (name) VALUES (?)`;
+        await this.connection.query(query, name);
+        console.log(`Added ${name} to the database`);
+    }
+
+    async deleteDepartment(name) {
+        try {
+            const query = `DELETE FROM department WHERE name = ?`;
+            await this.connection.query(query, [name]);
+            console.log(`Deleted department with ID ${name}`);
+        } catch (err) {
+            console.error(`Error deleting department: ${err.message}`);
+        }
+    }
+
 }
 
 

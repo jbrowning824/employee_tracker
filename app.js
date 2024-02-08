@@ -12,11 +12,19 @@ const dbConfig = {
 // instantiate new database connection
 const db = new Database(dbConfig);
 
-//testing to make sure views work
+//testing adding and removing departments
 async function init () {
     await db.viewDepartments();
-    await db.viewEmployees();
-    await db.viewRoles();
+    await db.addDepartment('Legal');
+    await db.viewDepartments();
+    await db.deleteDepartment('Legal');
+    await db.viewDepartments();
+
+    //await db.viewEmployees();
+    //await db.viewRoles();
+
+    
+    
 }
 
 init();
